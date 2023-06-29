@@ -17,6 +17,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+load_dotenv()
+tg_bot_token = os.getenv("TG_BOT_TOKEN")
+google_project_id = os.getenv("GOOGLE_PROJECT_ID")
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
 def detect_intent_texts(project_id, session_id, texts, language_code):
     session_client = dialogflow.SessionsClient()
 
@@ -64,11 +69,6 @@ def echo(update: Update, context: CallbackContext) -> None:
 
 
 def main() -> None:
-    load_dotenv()
-    tg_bot_token = os.getenv("TG_BOT_TOKEN")
-    google_project_id = os.getenv("GOOGLE_PROJECT_ID")
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-
     updater = Updater(tg_bot_token)
 
     dispatcher = updater.dispatcher
