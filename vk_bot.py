@@ -35,16 +35,19 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
             )
         )
         print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
-
-        return response.query_result.fulfillment_text
+        if response.query_result.intent.is_fallback:
+            return False
+        else:
+            return response.query_result.fulfillment_text
 
 def echo(event, vk_api, google_project_id):
     answer = detect_intent_texts(google_project_id, event.user_id, [event.text], "ru-RU")
-    vk_api.messages.send(
-        user_id=event.user_id,
-        message=answer,
-        random_id=random.randint(1,1000)
-    )
+    if answer:
+        vk_api.messages.send(
+            user_id=event.user_id,
+            message=answer,
+            random_id=random.randint(1,1000)
+        )
 
 def main() -> None:
     load_dotenv()
