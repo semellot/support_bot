@@ -47,7 +47,10 @@ pip install -r requirements.txt
 2. Для запуска бота в VK используйте команду `python vk_bot.py`
 
 3. Для обучения бота используйте команду `python learning_script.py`.
-  Данные будут браться из файла `questions.json`
+  По умолчанию данные будут браться из файла `questions.json`, но можно использовать другое имя файла. Пример запуска:
+  ```
+  python learning_script.py --json file.json
+  ```
 
 ## Пример использования бота
 

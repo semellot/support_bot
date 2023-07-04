@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -25,19 +26,24 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     )
 
     response = intents_client.create_intent(
-        request={"parent": parent, "intent": intent}
+        request={'parent': parent, 'intent': intent}
     )
 
-    print("Intent created: {}".format(response))
+    print('Intent created: {}'.format(response))
+
 
 if __name__ == '__main__':
     load_dotenv()
-    google_project_id = os.getenv("GOOGLE_PROJECT_ID")
+    google_project_id = os.getenv('GOOGLE_PROJECT_ID')
 
-    with open('questions.json', 'r') as my_file:
-      questions_json = my_file.read()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--json', help='Название файла json', default='questions.json')
+    args = parser.parse_args()
+
+    with open(args.json, 'r') as json_file:
+        questions_json = json_file.read()
     questions = json.loads(questions_json)
-    
+
     for intent, question in questions.items():
         create_intent(
             google_project_id,
