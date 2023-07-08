@@ -20,8 +20,8 @@ logger = logging.getLogger('Logger for vk_bot')
 
 
 def send_answer(event, vk_api, google_project_id):
-    answer = detect_intent_texts(google_project_id, event.user_id, event.text, 'ru-RU')
-    if answer:
+    has_answer, answer = detect_intent_texts(google_project_id, event.user_id, event.text, 'ru-RU')
+    if has_answer:
         vk_api.messages.send(
             user_id=event.user_id,
             message=answer,

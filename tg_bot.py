@@ -29,7 +29,7 @@ def start(update: Update, context: CallbackContext) -> None:
 def send_answer(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     google_project_id = os.environ['GOOGLE_PROJECT_ID']
-    answer = detect_intent_texts(google_project_id, user.id, update.message.text, 'ru-RU')
+    has_answer, answer = detect_intent_texts(google_project_id, user.id, update.message.text, 'ru-RU')
     update.message.reply_text(answer)
 
 
